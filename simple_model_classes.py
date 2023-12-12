@@ -31,69 +31,61 @@ c = df.iloc[:, 1:].values
 
 print(c)
 
-#classes flights and gates
-
-class Flight:
-    def __init__(self,fNum,arrT,depT,wingS):
-        self.fNum=fNum
-        self.arrT=arrT
-        self.depT=depT
-        self.wingS=wingS
-    
-    def __repr__(self):
-        text = "{0.fNum} - {0.arrT} - {0.depT} - {0.wingS}\n".format(self)
-        return text
-
-class Gate:
-    def __init__(self,gNum,opT,cloT,caT):
-        self.gNum=gNum
-        self.opT=opT
-        self.cloT=cloT
-        self.caT=caT
-    
-    def __repr__(self):
-        text= "{0.ICAO} - {0.RunwayL}\n".format(self)
-        return text
-
-aircraft=[]
-for info in dataaircraft:
-    aircraft.append(Aircraft(info[0],info[1],info[2],info[3],info[4],info[5],info[6],info[7],info[8],info[9]))
-
-airports=[]
-uselesscount=0
-for info in dataairport:
-        uselesscount+=1
-        if uselesscount%2==0:
-            airports.append(Airport(info[1],info[4]))
-
-airportlist=[airports[i].ICAO for i in range(len(airports))]
-
 # n = number of flights
 n = len(flights_matrix[:, 1])
 # m = number of gates
 m = len(gates_matrix[:, 1])
+print(n)
 
+#classes flights and gates
 
-gates_category = gates_matrix[:, 3]
-
-flights_arrival_time = flights_matrix[:, 1]
-flights_departing_time = flights_matrix[:, 2]
-flights_wingspan = flights_matrix[:, 3]
-flights_category = np.zeros(len(flights_wingspan))
-
-
-for i in range (n):
-    if flights_wingspan[i] < 30:
-        flights_category[i] = 1
-    elif flights_wingspan[i] < 45 and flights_wingspan[i] >= 30 :
-        flights_category[i] = 2
-    elif flights_wingspan[i] < 70 and flights_wingspan[i] >= 45 :
-        flights_category[i] = 3
-    else :
-        flights_category[i] = 4
+class Gate:
+    def __init__(self,gNum,opeT,cloT,catG):
+        self.gNum=gNum
+        self.opeT=opeT
+        self.cloT=cloT
+        self.catG=catG
     
-        
-print(flights_arrival_time,flights_departing_time, flights_wingspan, flights_category)
+    def __repr__(self):
+        text= "{0.gNum} - {0.opeT} - {0.cloT} - {0.catG}\n".format(self)
+        return text
+
+gate=[]
+for info in gates_matrix:
+    gate.append(Gate(info[0],info[1],info[2],info[3]))
+
+class Flight:
+    def __init__(self,fNum,arrT,depT,catA,wigS):
+        self.fNum=fNum
+        self.arrT=arrT
+        self.depT=depT
+        self.catA=catA
+        self.wigS=wigS
+    
+    def __repr__(self):
+        text = "{0.fNum} - {0.arrT} - {0.depT} - {0.catA} - {0.wigS}\n".format(self)
+        return text
+
+flight=[]
+for i in range(n):
+    flight[i] = Flight(flights_matrix[0][i],flights_matrix[1][i],flights_matrix[2][i],0.0,flights_matrix[3][i])
+    
+    '''flight[i].fNum = flights_matrix[0][i]
+    flight[i].arrT = flights_matrix[1][i]
+    flight[i].depT = flights_matrix[2][i]
+    flight[i].catA = 0.0
+    flight[i].wigS = flights_matrix[3][i]'''
+
+for i in range(n):
+    if flight[i].wigS < 30:
+        flight[i].catA = 1
+    elif flight[i].wigS < 45 and flight[i].wigS >= 30:
+        flight[i].catA = 2
+    elif flight[i].wigS < 70 and flight[i].wigS >= 45:
+        flight[i].catA = 3
+    else:
+        flight[i].catA = 4
+
 
 
 model = gp.Model()
@@ -104,8 +96,6 @@ x = model.addVars(n+1, n+1,m, vtype=GRB.BINARY, name="x")
 model.setObjective(gp.quicksum(x[i, j, k] * c[i][k] for i in range(1, n) for j in range(1, n+1) for k in range(m)) + gp.quicksum(x[0, j, k] * c[j][k] for j in range(0, n) for k in range(m)), GRB.MINIMIZE)
 
 
-
-
 model.addConstrs((gp.quicksum(x[i, j, k] for i in range(0, n) for k in range(m)) == 1 for j in range(1, n+1)), name="C1")
 model.addConstrs((gp.quicksum(x[0, j, k] for j in range(1, n+1)) == 1 for k in range(m)), name="C1*")
 #model.addConstrs((gp.quicksum(x[i, n, k] for i in range(0, n)) == 1 for k in range(m)), name="C1**")
@@ -114,13 +104,13 @@ model.addConstrs((gp.quicksum(x[0, j, k] for j in range(1, n+1)) == 1 for k in r
 
 for i in range(n):
     for k in range(m):
-        if flights_category[i] > gates_category[k]:
+        if flight[i].catA > gate[k].catG:
             model.addConstrs((x[i, j, k] == 0 for j in range(n+1)))
 
 
 for i in range(n):
     for j in range(n):
-        if flights_arrival_time[j] < flights_departing_time[i]:
+        if flight[j].arrT < flight[i].depT:
             model.addConstrs((x[i, j, k] == 0 for k in range(m)))
         
 
