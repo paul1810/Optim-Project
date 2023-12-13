@@ -7,7 +7,7 @@ from implementation import *
 
 if __name__ == "__main__":
     
-    """
+    
     # Verification for the GAP18_80
     G, F, T0, TM, ids, a, d, gates =read("GAP18_80.txt")
     instance_verif = Instance(G, F, T0, TM, ids, a, d, gates)
@@ -18,4 +18,4 @@ if __name__ == "__main__":
     #print(instance_verif)
     
     print(instance_verif.check_sol())
-    """
+    
