@@ -1,0 +1,48 @@
+Set parameter Username
+Set parameter TimeLimit to value 60
+Set parameter LogFile to value "gurobi.log"
+Using license file C:\Users\paulm\gurobi.lic
+Academic license - for non-commercial use only - expires 2025-01-04
+
+Gurobi Optimizer version 11.0.0 build v11.0.0rc2 (win64 - Windows 10.0 (19045.2))
+Copyright (c) 2023, Gurobi Optimization, LLC
+
+Read LP format model from file C:\Users\paulm\AppData\Local\Temp\e8ff98555304496197ce6ccff2921b07-pulp.lp
+Reading time = 0.01 seconds
+sum_of_the_cost_of_the_selected_arcs: 53 rows, 124 columns, 343 nonzeros
+
+CPU model: Intel(R) Core(TM) i5-4460  CPU @ 3.20GHz, instruction set [SSE2|AVX|AVX2]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 53 rows, 124 columns and 343 nonzeros
+Model fingerprint: 0x87328cc3
+Variable types: 1 continuous, 123 integer (123 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+02, 2e+05]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 92975.000000
+Presolve removed 21 rows and 29 columns
+Presolve time: 0.00s
+Presolved: 32 rows, 95 columns, 275 nonzeros
+Variable types: 0 continuous, 95 integer (95 binary)
+
+Root relaxation: objective 8.242500e+04, 36 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                    82425.000000 23450.0000  71.5%     -    0s
+     0     0          -    0      82425.0000 82425.0000  0.00%     -    0s
+
+Explored 1 nodes (48 simplex iterations) in 0.01 seconds (0.00 work units)
+Solution count 2: 82425 92975
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 8.242500000000e+04, best bound 8.242500000000e+04, gap 0.0000%
+
+Wrote result file 'C:\Users\paulm\AppData\Local\Temp\e8ff98555304496197ce6ccff2921b07-pulp.sol'
+
+[['KL055', 'EZY4025'], ['KL023', 'FR2105'], ['CX403', 'ZI734', 'KL6120'], ['LH218', 'IB8776']]
+Cost of the shortest path =  82425.0
