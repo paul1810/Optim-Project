@@ -3,11 +3,11 @@ from setup import read, Instance
 import pandas as pd
 
 # Read data and create instance
-G, F, TO, TM, ids, a, d, gates = read("GAP4_12.txt")
+G, F, TO, TM, ids, a, d, gates = read("GAP4_15.txt")
 instance_verif = Instance(G, F, TO, TM, ids, a, d, gates)
 
 # Solution list from your example
-solution_list = [['KL023', 'LH089', 'IB8776'], ['KL055', 'FR2105', 'KL6120'], ['CX403', 'LH218', 'LX1024'], ['LH479', 'ZI734', 'EZY4025']]
+solution_list = [['ZI454', 'KL023', 'LH218', 'IB8776'], ['KL018', 'KL055', 'CX444', 'LH1009'], ['ZI442', 'ZI412', 'ZI734', 'EZY4025'], ['CX403', 'KL002', 'FR2105']]
 
 # Create a list to store flight information
 flight_data = []
