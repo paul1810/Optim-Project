@@ -93,7 +93,7 @@ if __name__ == "__main__":
 """
 
 if __name__ == "__main__":
-    param_list = [60, "GAP4_.txt"]
+    param_list = [60, "GAP4_22.txt"]
     tmlim = param_list[0]
     file_path = param_list[1]
 
