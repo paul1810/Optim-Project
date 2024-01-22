@@ -5,94 +5,6 @@ from os import chdir
 import time
 #import sys
 
-"""
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Le programme 'expl_code_2.py' prend 2 argument en ligne de commande:\npython expl_code_2.py \n\t<temps limite> \n\t<chemin vers le repertoire des instances>\n")
-    else:
-        tmlim = sys.argv[1]
-        fichier = sys.argv[2]
-       
-        G, F, T0, TM, ids, a, d, gates =read(fichier)
-        A = [T0]+a+[TM]
-        D = [T0]+d+[TM]
-        GATES = [[i for i in range(G)]]+gates+[[i for i in range(G)]]
-        graphe = create_graph(F, A, D)
-        
-        prob = pulp.LpProblem("GAP", pulp.LpMinimize)
-
-        #On definit lensemble dindices pour lesquels on peut avoir une variable xij non nulle -ie les ij correspondant à un arc du graphe :
-        indicesijk = [(i,j, k) for i in range(len(graphe)) for j in range (len(graphe)) for k in range(G) if i!=j and graphe[i][j] != -1 and k in GATES[i] and k in GATES[j]]
-        # print ("arcs du graphe : {}".format(indicesijk))
-
-        # On definit la variable binaire de decision x
-        x = pulp.LpVariable.dicts("x", indicesijk, cat="Binary")
-
-        # Fonction objectif 	
-        prob += pulp.lpSum(graphe[i][j]*x[i,j, k] for (i ,j, k) in indicesijk), "somme des couts des arcs selectionnes"
-        
-        # Contraintes 
-        # depart du sommet d'indice 0
-        for k in range(G):
-            prob+= pulp.lpSum(x[0, j, k] for j in range(1,len(graphe)) if (0 ,j, k) in indicesijk)==1,'Depart du sommet 0 du poste {}'.format(k)
-
-        # arrivee au sommet d'indice N+1 (le dernier sommet)
-        for k in range(G):
-            prob+= pulp.lpSum(x[i,len(graphe)-1, k] for i in range(len(graphe)-1) if (i, len(graphe)-1, k) in indicesijk)==1,'Arrivee au dernier sommet du poste {}'.format(k)
-        
-        #conservation du Flot à chaque sommet
-        for k in range(G):
-            for s in range (1, len(graphe)-1):
-                prob+= pulp.lpSum(x[i,s, k] for i in range(len(graphe))  if (i, s, k) in indicesijk) - pulp.lpSum(x[s,j, k] for j in range(len(graphe)) if (s, j, k) in indicesijk) ==0,'flot_{} du poste {}'.format(s, k)
-
-        # contrainte attribution avion-poste unique
-        for j in range(1, len(graphe)-1):
-            prob+= pulp.lpSum(x[i, j, k] for i in range(0,len(graphe)-2) for k in range(G) if (i ,j, k) in indicesijk)==1,'Attribution d\'un unique poste à l\'avion {}'.format(j)
-        
-        #Ecriture du model dans un fichier
-        prob.writeLP("modele_GAP.lp")
-        
-        ####
-        #Resolution du modele par PLNE (appel au solveur Gurobi)
-        ####
-
-        prob.solve(pulp.GUROBI_CMD(msg=1, timeLimit=tmlim))
-        
-        ####
-        #Recuperation de la solution du modele
-        ####
-
-        # Affichage de la solution et recuperation au format de verification
-        liste_solution=[]
-        for k in range(G):
-            liste_postek = []
-            next_flight= int(sum(j*x[0,j, k].varValue for j in range (len(graphe)) if (0,j, k) in indicesijk))
-            iter=0
-            while next_flight != len(graphe)-1 and iter<=len(graphe):
-                liste_postek.append(ids[next_flight-1])
-                next_flight= int(sum(j*x[next_flight,j, k].varValue for j in range (len(graphe)) if (next_flight,j, k) in indicesijk))
-                iter+=1
-            if next_flight != F+1:
-                liste_postek.append(ids[next_flight-1])
-            liste_solution.append(liste_postek)
-        print (liste_solution)
-
-        solution_cost = pulp.value(prob.objective)
-        print ("Cout du plus court chemin = ", solution_cost)
-
-        #Ecriture de la solution de l'instance dans un fichier
-        chdir('solutions')
-        sortie = "L2_g4_{}_{}.txt".format(G, F)
-        with open(sortie, "w") as out:
-            out.write (("{} {}\n".format(G,F)))
-            out.write(("{}".format(solution_cost)))
-            for liste in liste_solution:
-                text= "\n"
-                for i in liste:
-                    text+= ("{} ".format(i))
-                out.write((text))
-"""
-
 if __name__ == "__main__":
     start_time = time.time()
     param_list = [60, "GAP50_299.txt"]
@@ -178,9 +90,6 @@ if __name__ == "__main__":
                 text+= ("{} ".format(i))
             out.write((text))
     
-    
-    
-
     end_time = time.time()
     # Calculate the elapsed time
     elapsed_time = end_time - start_time
