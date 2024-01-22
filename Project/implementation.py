@@ -93,7 +93,8 @@ if __name__ == "__main__":
 """
 
 if __name__ == "__main__":
-    param_list = [60, "GAP4_22.txt"]
+    start_time = time.time()
+    param_list = [60, "GAP50_299.txt"]
     tmlim = param_list[0]
     file_path = param_list[1]
 
@@ -175,3 +176,11 @@ if __name__ == "__main__":
             for i in l:
                 text+= ("{} ".format(i))
             out.write((text))
+    
+    
+    
+
+    end_time = time.time()
+    # Calculate the elapsed time
+    elapsed_time = end_time - start_time
+    print(f"Elapsed Time: {elapsed_time} seconds")
