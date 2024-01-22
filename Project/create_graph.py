@@ -12,7 +12,7 @@ def create_graph(F, A, D):
                 mat[i][j] = -1
     return mat
 
-file = 'GAP4_12.txt'
+file = 'GAP4_9.txt'
 G, F, T0, TM, ids, a, d, gates =read (file)
 A = [T0]+a+[TM]
 D = [T0]+d+[TM]
