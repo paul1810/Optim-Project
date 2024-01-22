@@ -7,7 +7,7 @@ import time
 
 if __name__ == "__main__":
     start_time = time.time()
-    param_list = [60, "GAP50_299.txt"]
+    param_list = [60, "sens_5_46.txt"]
     tmlim = param_list[0]
     file_path = param_list[1]
 
